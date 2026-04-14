@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DBMS Lab Guide by Zain</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="navbar-logo">DBMS Guide <span>by Zain</span></div>
+  <div class="nav-actions">
+    <button class="btn-pill" onclick="showRizzModal()">Daily rizz</button>
+    <button class="btn-pill" onclick="panicMode()">Exam panic</button>
+    <a href="62492.pdf" download style="text-decoration:none;">
+      <button class="btn-pill accent" onclick="flexDownload()">Get notes</button>
+    </a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">no cap, 100% lab pass rate*</div>
+  <h1>DBMS Lab Mastery</h1>
+  <p>Made with questionable sleep by Zain. Learn smart, pass faster, touch grass later.</p>
+  <div class="search-bar">
+    <span class="search-icon">&#128269;</span>
+    <input type="text" id="search" placeholder="type something bestie..." oninput="handleSearch(this.value)">
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num" id="stat-queries">6</div><div class="stat-label">topics explained</div></div>
+    <div class="stat"><div class="stat-num" id="stat-copies">0</div><div class="stat-label">code blocks copied</div></div>
+    <div class="stat"><div class="stat-num" id="stat-attempts">0</div><div class="stat-label">quiz attempts</div></div>
+  </div>
+</div>
+
+<!-- CARDS -->
+<div class="section-title">SQL topics</div>
+<div class="cards-grid" id="cards-container">
+
+  <div class="card" data-topic="sql create table insert select">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-title">
+        <div class="card-icon icon-blue">DB</div>
+        SQL basics
+      </div>
+      <span class="chevron">&#9654;</span>
+    </div>
+    <div class="card-body">
+      <div class="code-block" id="code1">CREATE TABLE student(
+  id     NUMBER,
+  name   VARCHAR2(20)
+);</div>
+      <button class="copy-btn" onclick="copyCode('code1', this)">Copy code</button>
+      <div class="joke-chip">SELECT love FROM heart WHERE you = 'never responded'</div>
+    </div>
+  </div>
+
+  <div class="card" data-topic="plsql pl sql procedural if else even odd declare begin">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-title">
+        <div class="card-icon icon-amber">PL</div>
+        PL/SQL
+      </div>
+      <span class="chevron">&#9654;</span>
+    </div>
+    <div class="card-body">
+      <div class="code-block" id="code2">DECLARE
+  num NUMBER := 10;
+BEGIN
+  IF MOD(num,2)=0 THEN
+    DBMS_OUTPUT.PUT_LINE('Even');
+  ELSE
+    DBMS_OUTPUT.PUT_LINE('Odd');
+  END IF;
+END;
+/</div>
+      <button class="copy-btn" onclick="copyCode('code2', this)">Copy code</button>
+      <div class="joke-chip">Debugging = character development arc</div>
+    </div>
+  </div>
+
+  <div class="card" data-topic="cursor fetch loop open close notfound">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-title">
+        <div class="card-icon icon-green">CR</div>
+        Cursor
+      </div>
+      <span class="chevron">&#9654;</span>
+    </div>
+    <div class="card-body">
+      <div class="code-block" id="code3">DECLARE
+  CURSOR c1 IS SELECT name FROM student;
+  v_name student.name%TYPE;
+BEGIN
+  OPEN c1;
+  LOOP
+    FETCH c1 INTO v_name;
+    EXIT WHEN c1%NOTFOUND;
+    DBMS_OUTPUT.PUT_LINE(v_name);
+  END LOOP;
+  CLOSE c1;
+END;
+/</div>
+      <button class="copy-btn" onclick="copyCode('code3', this)">Copy code</button>
+      <div class="joke-chip">A cursor is just infinite scroll but for databases</div>
+    </div>
+  </div>
+
+  <div class="card" data-topic="trigger dml before after insert update delete for each row">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-title">
+        <div class="card-icon icon-blue">TR</div>
+        Triggers
+      </div>
+      <span class="chevron">&#9654;</span>
+    </div>
+    <div class="card-body">
+      <div class="code-block" id="code4">CREATE OR REPLACE TRIGGER trg_student
+BEFORE INSERT ON student
+FOR EACH ROW
+BEGIN
+  :NEW.name := UPPER(:NEW.name);
+END;
+/</div>
+      <button class="copy-btn" onclick="copyCode('code4', this)">Copy code</button>
+      <div class="joke-chip">Triggers: the DB version of "k" texts that set you off</div>
+    </div>
+  </div>
+
+  <div class="card" data-topic="procedure function subprogram create replace parameter">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-title">
+        <div class="card-icon icon-green">PR</div>
+        Procedures
+      </div>
+      <span class="chevron">&#9654;</span>
+    </div>
+    <div class="card-body">
+      <div class="code-block" id="code5">CREATE OR REPLACE PROCEDURE greet(
+  p_name IN VARCHAR2
+) AS
+BEGIN
+  DBMS_OUTPUT.PUT_LINE('hey ' || p_name);
+END;
+/</div>
+      <button class="copy-btn" onclick="copyCode('code5', this)">Copy code</button>
+      <div class="joke-chip">Procedures: reusable code, like that one group chat template</div>
+    </div>
+  </div>
+
+  <div class="card" data-topic="exception handling when others then dup val error">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-title">
+        <div class="card-icon icon-amber">EX</div>
+        Exception handling
+      </div>
+      <span class="chevron">&#9654;</span>
+    </div>
+    <div class="card-body">
+      <div class="code-block" id="code6">BEGIN
+  INSERT INTO student VALUES(1, 'Zain');
+EXCEPTION
+  WHEN DUP_VAL_ON_INDEX THEN
+    DBMS_OUTPUT.PUT_LINE('already exists bestie');
+  WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('idk what happened lol');
+END;
+/</div>
+      <button class="copy-btn" onclick="copyCode('code6', this)">Copy code</button>
+      <div class="joke-chip">WHEN OTHERS THEN: the "it's fine" of SQL</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- QUIZ -->
+<div class="section-title">Vibe check — quick quiz</div>
+<div class="quiz-section">
+  <div class="quiz-meta">
+    <div class="quiz-meta-text">Question <span id="q-num">1</span> of 4</div>
+    <div class="quiz-meta-text">Score: <span id="score">0</span></div>
+  </div>
+  <div class="progress-bar-wrap"><div class="progress-bar" id="quiz-progress" style="width:25%"></div></div>
+  <div class="quiz-q" id="quiz-q"></div>
+  <div class="quiz-options" id="quiz-opts"></div>
+  <div id="quiz-feedback" class="quiz-feedback"></div>
+</div>
+
+<!-- NOTES DOWNLOAD -->
+<div class="section-title">Zain's sacred notes</div>
+<div class="notes-card">
+  <div>
+    <div class="notes-title">62492.pdf</div>
+    <div class="notes-sub">these notes carried through DBMS lab — use wisely fr</div>
+  </div>
+  <a href="62494.pdf" download style="text-decoration:none;">
+    <button class="btn-pill accent" onclick="flexDownload()">Download PDF</button>
+  </a>
+</div>
+
+<!-- PDF PREVIEW -->
+<div class="section-title">PDF preview</div>
+<div class="pdf-wrapper">
+  <iframe src="62494.pdf" class="pdf-frame"></iframe>
+</div>
+
+<!-- IMAGE GALLERY -->
+<div class="section-title">Notes gallery</div>
+<div class="gallery-grid">
+  <div class="gallery-item" onclick="openImage(0)">
+    <img src="WhatsApp%20Image%202026-04-15%20at%201.17.02%20AM.jpeg" alt="Note 1">
+  </div>
+  <div class="gallery-item" onclick="openImage(1)"><img src="img2.jpeg" alt="Note 2"></div>
+  <div class="gallery-item" onclick="openImage(2)"><img src="img3.jpeg" alt="Note 3"></div>
+  <div class="gallery-item" onclick="openImage(3)"><img src="img4.jpeg" alt="Note 4"></div>
+  <div class="gallery-item" onclick="openImage(4)"><img src="img5.jpeg" alt="Note 5"></div>
+  <div class="gallery-item" onclick="openImage(5)"><img src="img6.jpeg" alt="Note 6"></div>
+</div>
+
+<!-- IMAGE MODAL -->
+<div id="imageModal" class="img-overlay" onclick="closeImage()">
+  <div class="img-modal-content" onclick="event.stopPropagation()">
+    <button class="img-close" onclick="closeImage()">&#10005;</button>
+    <button class="img-nav img-prev" onclick="changeImage(-1)">&#10094;</button>
+    <img id="fullImage" src="" alt="Full note">
+    <button class="img-nav img-next" onclick="changeImage(1)">&#10095;</button>
+  </div>
+</div>
+
+<!-- RIZZ MODAL -->
+<div class="overlay" id="rizz-modal" onclick="closeModal('rizz-modal')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('rizz-modal')">&#10005;</button>
+    <h3 id="rizz-title">Daily rizz loading...</h3>
+    <p id="rizz-body"></p>
+    <div class="modal-actions">
+      <button class="btn-pill" onclick="closeModal('rizz-modal')">aight bet</button>
+      <button class="btn-pill accent" onclick="nextRizz()">another one</button>
+    </div>
+  </div>
+</div>
+
+<!-- PANIC MODAL -->
+<div class="overlay" id="panic-modal" onclick="closeModal('panic-modal')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('panic-modal')">&#10005;</button>
+    <h3>exam panic protocol activated</h3>
+    <p id="panic-body">calculating your survival probability...</p>
+    <div class="progress-bar-wrap" style="margin: 16px 0;">
+      <div class="progress-bar" id="panic-bar" style="width:0%; background:#E24B4A;"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-pill" onclick="closeModal('panic-modal')">i'm fine (i'm not)</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toasts"></div>
+
+<footer>
+  Made with questionable amounts of chai by Zain &middot; DBMS grind never stops &middot; *results not guaranteed
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
