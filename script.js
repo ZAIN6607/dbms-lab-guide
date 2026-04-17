@@ -277,8 +277,40 @@ document.addEventListener('keydown', function (e) {
   if (e.key === 'ArrowLeft') changeImage(-1);
 });
 
+// ===== VISIT COUNTER =====
+function initVisitCounter() {
+  var count = parseInt(localStorage.getItem('dbms_visit_count') || '0', 10);
+  count++;
+  localStorage.setItem('dbms_visit_count', count);
+
+  // animate count up
+  var el = document.getElementById('stat-visits');
+  var start = 0;
+  var duration = 1200;
+  var step = Math.ceil(count / (duration / 30));
+  var timer = setInterval(function () {
+    start += step;
+    if (start >= count) {
+      start = count;
+      clearInterval(timer);
+    }
+    el.textContent = start;
+  }, 30);
+
+  if (count === 1) {
+    setTimeout(function () { toast('first visit detected — legend status unlocked 🏆'); }, 1200);
+  } else if (count === 10) {
+    setTimeout(function () { toast('10 visits?? you really live here huh 💀'); }, 1200);
+  } else if (count === 50) {
+    setTimeout(function () { toast('50 visits. you are the DBMS now bestie 🫡'); }, 1200);
+  } else if (count % 25 === 0) {
+    setTimeout(function () { toast('visit #' + count + ' — the grind is real fr 💪'); }, 1200);
+  }
+}
+
 // ===== INIT =====
 window.onload = function () {
+  initVisitCounter();
   loadQuiz();
   setTimeout(function () {
     toast('yo welcome to the DBMS guide 👋 check the daily rizz button fr');
